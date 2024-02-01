@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}" />
+</head>
+
+<body>
+        <div class="login-page-container">
+            <p class="welcome-back-text">Welcome Back</p>
+            <div class="login-black-container">
+                <div style="display: grid; place-items: center;" class="upper-portion">
+                    <form action="#" method="post">
+                    <div class="email-input-container">
+                        <p style="color: white; text-align: left;">E-mail</p>
+                        <input type="email" name="usremail" class="user-input">
+                    </div>
+                    <div class="password-input-container">
+                        <p style="color: white; text-align: left; margin-top: 1rem;">Password</p>
+                        <input type="password" name="usrpassword" class="user-input">
+                    </div>
+                    <input class="log-in-button" type="submit" value="Log in">
+                    </form>
+                </div>
+
+                <div style="display: grid; place-items: center;" class="down-portion">
+                    <p style="color: white; font-weight: 500;">Don't have an account?</p>
+                    <a href="/register/"><button class="register-button">Register</button></a>
+                </div>
+            </div>
+        </div>
+    
+</body>
+
+</html>

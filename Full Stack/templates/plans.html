@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Pricing</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900\\&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
+</head>
+
+<body>
+    <p style="text-align:center; color: #85C4FF; font-size: 500%; font-family: 'Inter'; font-weight: 900; margin-top: 3%;">Pricing</p>
+    <div class="price-container">
+        <div class="price">
+            <div style="margin-top: 0.8rem;">
+                <p style="text-align: center;">Starter</p>
+                <p style="text-align: center; font-size: 350%;">Free</p>
+                <p style="text-align: center;">Starter plan includes:</p>
+                <ul style="line-height: 2; margin-top:2rem;">
+                    <li>Tracking basic improvements</li>
+                    <li>Community chat</li>
+                    <li>Weekly blogs</li>
+                    <li>Weekly puzzles</li>
+                </ul>
+                <div style="width: 100%; display: grid; place-items: center;"><button class="get-started">Get started with starter</button></div>
+            </div>
+        </div>
+        <div class="price">
+            <div style="margin-top: 0.8rem;">
+                <p style="text-align: center;">Supporter</p>
+                <p style="text-align: center; font-size: 350%;">2$ <span style="position:absolute; color: rgba(0,0,0,0.3); font-size: 1rem; margin-left: 0.3rem;margin-top: 1.5rem">/mo</span></p>
+                <p style="text-align: center;">Everything on Starter plus:</p>
+                <ul style="line-height: 2; margin-top:2rem;">
+                    <li>Tracking custom improvements</li>
+                    <li>Supporter chat</li>
+                    <li>Daily blogs</li>
+                    <li>Daily puzzles</li>
+                </ul>
+                <div style="width: 100%; display: grid; place-items: center;"><button class="get-started">Get started with supporter</button></div>
+            </div>
+        </div>
+        <div class="price">
+            <div style="margin-top: 0.8rem;">
+                <p style="text-align: center;">Premier</p>
+                <p style="text-align: center; font-size: 350%;">7$ <span style="position:absolute; color: rgba(0,0,0,0.3); font-size: 1rem; margin-left: 0.3rem;margin-top: 1.5rem">/mo</span></p>
+                <p style="text-align: center;">Everything on Premier plus:</p>
+                <ul style="line-height: 2; margin-top:2rem;">
+                    <li>Personal layout</li>
+                    <li>Premier chat</li>
+                    <li>Early acces to daily blogs</li>
+                    <li>Early acces to daily puzzles</li>
+                </ul>
+                <div style="width: 100%; display: grid; place-items: center;"><button class="get-started">Get started with premier</button></div>
+            </div>
+        </div>
+    </div>
+    <div style="display: grid; place-items: center; margin-top: 5rem;">
+        <a href="{{ url_for('home') }}"><button style="width: 15rem; height:5rem; font-size: 1.7rem; font-family: 'Inter'; font-weight: 900; cursor:pointer;">Return to home</button></a>
+    </div>
+</body>
+
+</html>
