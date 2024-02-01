@@ -1,6 +1,8 @@
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
 
+login_or_signup_button = "Sign Up"
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -25,8 +27,8 @@ class users(db.Model):
 @app.route("/")
 @app.route("/home/")
 def home():
-    return render_template("home.html")
-print("Sas")
+    return render_template("home.html", content=login_or_signup_button)
+
 @app.route("/contact-me/")
 def contact_me():
     return render_template("contact-me.html")
@@ -70,6 +72,9 @@ def register():
 @app.route("/login/",  methods=["POST", "GET"])
 def login():
     if "user" in session:
+        session.pop("user", None)
+        global login_or_signup_button
+        login_or_signup_button = "Sign Up"
         return redirect(url_for("home"))
     else:
         if request.method == "POST":
@@ -81,8 +86,8 @@ def login():
                 session.permanent = True
                 session["user"] = usremail
                 print(f"Logged in as {usremail, usrpassword}")
+                login_or_signup_button = "Log out"
                 return redirect(url_for("home"))
-
             elif user_exists and not true_password:
                 print("Failed to log in because incorrect password")
                 return redirect(url_for("login"))
