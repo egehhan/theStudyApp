@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
+from datetime import timedelta
 
 login_or_signup_button = "Sign Up"
 
@@ -7,6 +8,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = "estoyloco"
+app.permanent_session_lifetime = timedelta(days=5)
 
 db = SQLAlchemy(app)
 
@@ -47,6 +49,7 @@ def pricing():
 
 @app.route("/register/", methods=["POST", "GET"])
 def register():
+    global login_or_signup_button
     if "user" in session:
         return redirect(url_for("home"))
     else:
@@ -64,7 +67,9 @@ def register():
                 usr = users(name=usrname, email=usremail, password=usrpassword)
                 db.session.add(usr)
                 db.session.commit()
+                session.permanent = True
                 session["user"] = usremail
+                login_or_signup_button = "Log Out"
                 return redirect(url_for("home"))
         elif request.method == "GET":
             return render_template("register.html")
@@ -86,7 +91,7 @@ def login():
                 session.permanent = True
                 session["user"] = usremail
                 print(f"Logged in as {usremail, usrpassword}")
-                login_or_signup_button = "Log out"
+                login_or_signup_button = "Log Out"
                 return redirect(url_for("home"))
             elif user_exists and not true_password:
                 print("Failed to log in because incorrect password")
