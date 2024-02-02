@@ -1,5 +1,5 @@
 const labels = []
-const data = [{ x: "Feb 14", y: 0.4 }]
+const data = []
 
 const ctx = document.getElementById('dataChart');
 
@@ -54,12 +54,14 @@ var myChart = new Chart(ctx, {
 function addDataToChart() {
     var hours = document.getElementById('hours').value;
     var minutes = document.getElementById('minutes').value;
+    var date = document.getElementById('date').value;
 
-    var date = new Date();
-    console.log(date)
+    let totalhours;
+    totalhours = ((parseInt(hours) * 60) + parseInt(minutes)) / 60;
+
+    console.log(date);
     myChart.data.labels.push(date);
-    myChart.data.datasets[0].data.push(parseInt(hours));
-    myChart.data.datasets[0].data.push(parseInt(minutes));
+    data.push({ x: date, y: totalhours });
 
     console.log("Updated chart");
     myChart.update();
@@ -67,4 +69,8 @@ function addDataToChart() {
     // Clear the input fields
     document.getElementById('hours').value = '';
     document.getElementById('minutes').value = '';
+}
+
+function logtheshit() {
+    console.log(data)
 }
