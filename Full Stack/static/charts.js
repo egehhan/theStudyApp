@@ -1,10 +1,4 @@
 const ctx = document.getElementById('dataChart');
-/*! Hammer.JS - v2.0.8 - 2016-04-23
- * http://hammerjs.github.io/
- *
- * Copyright (c) 2016 Jorik Tangelder;
- * Licensed under the MIT license */
-
 new Chart(ctx, {
     type: 'line',
     data: {
