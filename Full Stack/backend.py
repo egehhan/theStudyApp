@@ -39,8 +39,12 @@ def contact_me():
 def tracking():
     return render_template("tracking.html")
 
-@app.route("/techniques/")
+@app.route("/techniques/", methods=['POST', 'GET'])
 def techniques():
+    if request.method == 'POST':
+        date = request.form["date"]
+        totalhours = (int(request.form["hours"])*60+int(request.form["minutes"]))/60
+        
     return render_template("study techniques.html")
 
 @app.route("/plans/")

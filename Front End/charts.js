@@ -37,7 +37,7 @@ var chartOptions = {
 var chartData = {
     labels: labels,
     datasets: [{
-        label: 'hours studied/day',
+        label: 'hours spent studying',
         data: data,
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
@@ -71,6 +71,12 @@ function addDataToChart() {
     document.getElementById('minutes').value = '';
 }
 
-function logtheshit() {
-    console.log(data)
+function changeGraph() {
+    if (myChart.config.type === "line") {
+        myChart.config.type = 'bar'
+    } else {
+        myChart.config.type = 'line'
+    }
+    myChart.update();
+    console.log("Updated chart");
 }
