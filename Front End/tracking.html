@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tracking</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="tracking.css">
+
+</head>
+
+<body style="background-color:#282626;">
+
+
+    <p style="text-align: center; margin-top:2rem; color: white; font-family: 'SF Pro Display'; margin-bottom: 1rem">Please input the time you spent studying.</p>
+    <form onsubmit="addDataToChart(); return false;">
+        <div class="information-input" style="display: grid; place-items: center;">
+            <div class="studied-for-input" style="width: 20%; display: grid; place-items: center; grid-template-columns: auto auto auto auto auto">
+                <p style="color: white;">I studied for </p><input type="number" min="1" max="24" id="hours" name="progress_hours" style="width: 2rem;">
+                <p style="color: white;">hours and </p> <input type="number" min="0" max="59" id="minutes" name="progress_minutes" style="width: 2rem;">
+                <p style="color: white;">minutes</p>
+            </div>
+            <input type="date" name="progress_date">
+            <input type="submit" value="Add" name="progress_date">
+        </div>
+    </form>
+    <div><canvas aria-label="Hello ARIA World" width="100" height="30" id="dataChart"></canvas></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js" integrity="sha256-UDxwmAK+KFxnav4Dab9fcgZtCwwjkpGIwxWPNcAyepw=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="charts.js"></script>
+
+</body>
+
+</html>
