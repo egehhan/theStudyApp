@@ -2,12 +2,14 @@ from flask import Flask, render_template, redirect, url_for, request, session, f
 from flask_sqlalchemy import SQLAlchemy
 from datetime import timedelta
 
+
 login_or_signup_button = "Sign Up"
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = "estoyloco"
+app.config['SECRET_KEY'] = "estoyloco"
 app.permanent_session_lifetime = timedelta(days=5)
 
 db = SQLAlchemy(app)
@@ -17,7 +19,7 @@ app.app_context().push()
 class users(db.Model):
 
     _id = db.Column("id", db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
+    name = db.Column(db.String(100), unique=True)
     email = db.Column(db.String(100))
     password = db.Column(db.String(100))
     
@@ -26,9 +28,15 @@ class users(db.Model):
         self.email = email
         self.password = password
 
+
+
 @app.route("/")
 @app.route("/home/")
 def home():
+    if "user" in session:
+        login_or_signup_button = "Log Out"
+    else:
+        login_or_signup_button = "Sign Up"
     return render_template("home.html", content=login_or_signup_button)
 
 @app.route("/contact-me/")
@@ -37,8 +45,11 @@ def contact_me():
 
 @app.route("/tracking/")
 def tracking():
-    return render_template("tracking.html")
-
+    global login_or_signup_button
+    if "user" in session:
+        return render_template("tracking.html")
+    else:
+        return redirect(url_for("login"))
 @app.route("/techniques/", methods=['POST', 'GET'])
 def techniques():
     if request.method == 'POST':

@@ -37,6 +37,7 @@ var chartOptions = {
 var chartData = {
     labels: labels,
     datasets: [{
+        backgroundColor: 'rgb(75, 192, 192)',
         label: 'hours spent studying',
         data: data,
         fill: false,
@@ -52,6 +53,7 @@ var myChart = new Chart(ctx, {
 });
 
 function addDataToChart() {
+    myChart.zoom({ x: 0.05 })
     var hours = document.getElementById('hours').value;
     var minutes = document.getElementById('minutes').value;
     var date = document.getElementById('date').value;
@@ -59,23 +61,20 @@ function addDataToChart() {
     let totalhours;
     totalhours = ((parseInt(hours) * 60) + parseInt(minutes)) / 60;
 
-    console.log(date);
-    myChart.data.labels.push(date);
     data.push({ x: date, y: totalhours });
 
     console.log("Updated chart");
     myChart.update();
 
-    // Clear the input fields
     document.getElementById('hours').value = '';
     document.getElementById('minutes').value = '';
 }
 
 function changeGraph() {
     if (myChart.config.type === "line") {
-        myChart.config.type = 'bar'
+        myChart.config.type = 'bar';
     } else {
-        myChart.config.type = 'line'
+        myChart.config.type = 'line';
     }
     myChart.update();
     console.log("Updated chart");

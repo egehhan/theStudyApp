@@ -15,19 +15,21 @@
 
 
     <p style="text-align: center; margin-top:2rem; color: white; font-family: 'SF Pro Display'; margin-bottom: 1rem">Please input the time you spent studying.</p>
-    <form onsubmit="addDataToChart(); return false;">
+    <form onsubmit="addDataToChart(); return false;" methods="POST">
         <div class="information-input" style="display: grid; place-items: center;">
             <div class="studied-for-input" style="width: 20%; display: grid; place-items: center; grid-template-columns: auto auto auto auto auto">
-                <p style="color: white;">I studied for </p><input type="number" min="1" max="24" id="hours" name="hours" style="width: 2rem;">
-                <p style="color: white;">hours and </p> <input type="number" min="0" max="59" id="minutes" name="minutes" style="width: 2rem;">
+                <p style="color: white;">I studied for </p><input type="number" min="0" max="15" id="hours" required name="hours" style="width: 2rem;">
+                <p style="color: white;">hours and </p> <input type="number" min="0" max="59" id="minutes" required name="minutes" style="width: 2rem;">
                 <p style="color: white;">minutes</p>
             </div>
-            <input type="date" name="progress_date" id="date">
-            <input type="submit" value="Add" name="date">
+            <input type="date" name="progress_date" id="date" required>
+            <input type="submit" value="Add" name="date" required>
             <button onclick="changeGraph(); return false;">Change Graph</button>
         </div>
     </form>
-    <div><canvas aria-label="Hello ARIA World" width="100" height="30" id="dataChart"></canvas></div>
+    <div class="wrapper" style="padding-top:0.3rem;">
+        <div class="wrapper" style="width:43rem;height:30rem; background-color: rgba(0,0,0,0.2); border-radius:2rem; padding:1rem"><canvas aria-label="Hello ARIA World" width="15" height="10" id="dataChart"></canvas></div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
