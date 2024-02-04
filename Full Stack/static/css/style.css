@@ -159,8 +159,8 @@ body {
 }
 
 .technique-icon-container {
-    max-width: 80%;
-    min-height: auto;
+    width: 50%;
+    height: 95%;
     border-radius: 4vh;
     display: grid;
     place-items: center;

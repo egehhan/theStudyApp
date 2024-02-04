@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import timedelta
+import json
 
 
 login_or_signup_button = "Sign Up"
@@ -22,13 +23,13 @@ class users(db.Model):
     name = db.Column(db.String(100), unique=True)
     email = db.Column(db.String(100))
     password = db.Column(db.String(100))
+    tracking = db.Column(db.Text())
     
-    def __init__(self, name, email, password):
+    def __init__(self, name, email, password, tracking):
         self.name = name
         self.email = email
         self.password = password
-
-
+        self.tracking = tracking
 
 @app.route("/")
 @app.route("/home/")
@@ -43,24 +44,34 @@ def home():
 def contact_me():
     return render_template("contact-me.html")
 
-@app.route("/tracking/")
+@app.route("/tracking/", methods=['POST', 'GET'])
 def tracking():
     global login_or_signup_button
-    if "user" in session:
-        return render_template("tracking.html")
-    else:
+    if "user" not in session:
         return redirect(url_for("login"))
+    if request.method == 'POST':
+        
+        date = str(request.form["date"])
+        hours = int(request.form["hours"])
+        minutes = int(request.form["minutes"])
+        totalhours = (int(hours)*60+minutes)/60
+        print(users.query.filter_by())
+        
+        
+        db.session.commit()
+        return render_template("tracking.html")
+    else:   
+        return render_template("tracking.html")
+        
 @app.route("/techniques/", methods=['POST', 'GET'])
 def techniques():
-    if request.method == 'POST':
-        date = request.form["date"]
-        totalhours = (int(request.form["hours"])*60+int(request.form["minutes"]))/60
-        
     return render_template("study techniques.html")
 
 @app.route("/plans/")
 def pricing():
     return render_template("plans.html")
+
+
 
 @app.route("/register/", methods=["POST", "GET"])
 def register():
@@ -79,7 +90,7 @@ def register():
                 flash("There is a user with that email/username unfortunutely.")
                 return redirect(url_for("register"))
             else:
-                usr = users(name=usrname, email=usremail, password=usrpassword)
+                usr = users(name=usrname, email=usremail, password=usrpassword, tracking="[]")
                 db.session.add(usr)
                 db.session.commit()
                 session.permanent = True

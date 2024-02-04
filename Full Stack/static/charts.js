@@ -52,8 +52,12 @@ var myChart = new Chart(ctx, {
     options: chartOptions
 });
 
+setTimeout(function() {
+    console.log('Delayed execution!');
+}, 3000);
+
 function addDataToChart() {
-    myChart.zoom({ x: 0.05 })
+    myChart.zoom({ x: 0.05 });
     var hours = document.getElementById('hours').value;
     var minutes = document.getElementById('minutes').value;
     var date = document.getElementById('date').value;
@@ -69,6 +73,14 @@ function addDataToChart() {
     document.getElementById('hours').value = '';
     document.getElementById('minutes').value = '';
 }
+
+function addDataToChartWithDelay() {
+    setTimeout(addDataToChart, 2000);
+}
+
+
+
+
 
 function changeGraph() {
     if (myChart.config.type === "line") {

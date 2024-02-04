@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <script src="{{url_for('static',filename="sc.js" )}}"></script>
+    <script src="{{url_for('static',filename=" sc.js " )}}"></script>
     <script src="{{url_for('static', filename='node_modules/chart.js/dist/chart.umd.js') }}"></script>
 
     <div class="header-container">
@@ -22,7 +22,8 @@
             <div class="sign-up-button-container"> <a href="/login"><button class="sign-up-button">{{content}}</button></a></div>
             <div class="header-text-container">
                 <p class="header-title-text">The Study App</p>
-                <p class="header-description-text">This is the study app where you can <span style="color: #FFF500;">improve</span> your grades using <a draggable="false" style="text-decoration: none;" href="/techniques"><span style="color: #8AEAFF;">study techniques</span></a>                    and <a draggable="false" style="text-decoration: none;" href="/tracking"><span style="color: #00FF1A;">track</span></a> your improvements. </p>
+                <p class="header-description-text">This is the study app where you can <span style="color: #FFF500;">improve</span> your grades using <a draggable="false" style="text-decoration: none;" href="/techniques"><span style="color: #8AEAFF;">study techniques</span></a> and
+                    <a draggable="false" style="text-decoration: none;" href="/tracking"><span style="color: #00FF1A;">track</span></a> your improvements. </p>
             </div>
             <div class="header-icons-container">
                 <div class="track-progress">
@@ -57,17 +58,19 @@
             </div>
             <div class="middle-div">
                 <p class="middle-div-title">Joining the <span style="color: #00D971;">community</span></p>
-                <div class="big-gray-bg-2">
-                    <img style="height: 6vw;" draggable="false" src="{{ url_for('static', filename='big-community-icon.png') }}" alt="">
+                <div class="big-gray-bg-2" style="display:grid; place-items: center; grid-template-columns: 1fr; width: 15%;">
+                    <div style="border-radius: 2rem;display: grid; place-items: center;">
+                        <img style="height: 8vw;" draggable="false" src="{{ url_for('static', filename='big-community-icon.png') }}" alt="">
+                    </div>
                 </div>
                 <p class="middle-div-description">If you want to share your progress, discuss important topics and want to chat to people with your ambitions look no further than our chat rooms.</p>
             </div>
             <div class="middle-div">
                 <p class="middle-div-title">Learning new <span style="color: #FF0000;">techniques</span></p>
                 <div class="big-gray-bg-2">
-                    <div style="background-color: #8AEAFF;" class="technique-icon-container"><img style="max-width: 60%;" draggable="false" src="{{ url_for('static', filename='technique-icon-2.png') }}" alt=""></div>
-                    <div style="background-color: #FF0000" class="technique-icon-container"><img style="max-width: 60%;" draggable="false" src="{{ url_for('static', filename='technique-icon-2.png') }}" alt=""></div>
-                    <div style="background-color: #FFD600" class="technique-icon-container"><img style="max-width: 60%;" draggable="false" src="{{ url_for('static', filename='technique-icon-2.png') }}" alt=""></div>
+                    <div style="background-color: #8AEAFF;" class="technique-icon-container"><img style="width: 95%;" draggable="false" src="{{ url_for('static', filename='technique-icon-2.png') }}" alt=""></div>
+                    <div style="background-color: #FF0000" class="technique-icon-container"><img style="width: 95%;" draggable="false" src="{{ url_for('static', filename='technique-icon-2.png') }}" alt=""></div>
+                    <div style="background-color: #FFD600" class="technique-icon-container"><img style="width: 95%;" draggable="false" src="{{ url_for('static', filename='technique-icon-2.png') }}" alt=""></div>
                 </div>
                 <p class="middle-div-description">We will have weekly/daily blogs about learning techniques and the experiments we’ve done to find new learning techniques. The techniques will be extensively reserached.</p>
             </div>
