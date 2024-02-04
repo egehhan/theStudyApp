@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import timedelta
-import json
+from ast import literal_eval
 
 
 login_or_signup_button = "Sign Up"
@@ -30,7 +30,7 @@ class users(db.Model):
         self.email = email
         self.password = password
         self.tracking = tracking
-
+        
 @app.route("/")
 @app.route("/home/")
 def home():
@@ -51,14 +51,18 @@ def tracking():
         return redirect(url_for("login"))
     if request.method == 'POST':
         
-        date = str(request.form["date"])
+        ##### SAVE TRACKING DATA TO DATABASE AS A HASHMAP {date: totalhours} #####
+        date = str(request.form["date"]) # turn the date into a readable type
         hours = int(request.form["hours"])
         minutes = int(request.form["minutes"])
-        totalhours = (int(hours)*60+minutes)/60
-        print(users.query.filter_by())
+        totalhours = (int(hours)*60+minutes)/60 # calculate the total hours
+        user = users.query.filter_by(email=session["user"]).first() # get the user
+        data = dict(literal_eval(user.tracking)) # get user's tracking data, turn it into a list and turn it into a dict(hashmap)
+        data[date] = data.get(date,0) + totalhours # increase the total hours studied related to the date
+        data = str(data) # turn the data into a writable type
+        user.tracking = data # enter the data to the database
+        db.session.commit() # commit changes
         
-        
-        db.session.commit()
         return render_template("tracking.html")
     else:   
         return render_template("tracking.html")
@@ -90,7 +94,7 @@ def register():
                 flash("There is a user with that email/username unfortunutely.")
                 return redirect(url_for("register"))
             else:
-                usr = users(name=usrname, email=usremail, password=usrpassword, tracking="[]")
+                usr = users(name=usrname, email=usremail, password=usrpassword, tracking="{}")
                 db.session.add(usr)
                 db.session.commit()
                 session.permanent = True
