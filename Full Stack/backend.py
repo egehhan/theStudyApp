@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import timedelta
 from ast import literal_eval
 
-
 login_or_signup_button = "Sign Up"
 
 app = Flask(__name__)
@@ -35,8 +34,10 @@ class users(db.Model):
 @app.route("/home/")
 def home():
     if "user" in session:
+        print("User is logged in")
         login_or_signup_button = "Log Out"
     else:
+        print("User is not logged in")
         login_or_signup_button = "Sign Up"
     return render_template("home.html", content=login_or_signup_button)
 
@@ -48,9 +49,10 @@ def contact_me():
 def tracking():
     global login_or_signup_button
     if "user" not in session:
+        print("User is not logged in redirecting to login page.")
         return redirect(url_for("login"))
     if request.method == 'POST':
-        
+        print("Saving tracking data to database.")
         ##### SAVE TRACKING DATA TO DATABASE AS A HASHMAP {date: totalhours} #####
         date = str(request.form["date"]) # turn the date into a readable type
         hours = int(request.form["hours"])
@@ -62,6 +64,8 @@ def tracking():
         data = str(data) # turn the data into a writable type
         user.tracking = data # enter the data to the database
         db.session.commit() # commit changes
+        print("Saved tracking data to database.")
+        print(f"{data}")
         
         return render_template("tracking.html")
     else:   
@@ -75,12 +79,11 @@ def techniques():
 def pricing():
     return render_template("plans.html")
 
-
-
 @app.route("/register/", methods=["POST", "GET"])
 def register():
     global login_or_signup_button
     if "user" in session:
+        print("User is already in session redirecting to home.")
         return redirect(url_for("home"))
     else:
         if request.method == "POST":
@@ -91,7 +94,7 @@ def register():
             found_user = users.query.filter_by(name=usrname).first()
             found_email = users.query.filter_by(email=usremail).first()
             if found_user or found_email:
-                flash("There is a user with that email/username unfortunutely.")
+                print("There is a user with that email/username unfortunutely.")
                 return redirect(url_for("register"))
             else:
                 usr = users(name=usrname, email=usremail, password=usrpassword, tracking="{}")
@@ -99,6 +102,7 @@ def register():
                 db.session.commit()
                 session.permanent = True
                 session["user"] = usremail
+                print("Registered new user ")
                 login_or_signup_button = "Log Out"
                 return redirect(url_for("home"))
         elif request.method == "GET":

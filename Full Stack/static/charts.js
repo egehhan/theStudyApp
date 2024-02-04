@@ -1,5 +1,5 @@
 const labels = []
-const data = []
+var data = []
 
 const ctx = document.getElementById('dataChart');
 
@@ -54,7 +54,7 @@ var myChart = new Chart(ctx, {
 
 setTimeout(function() {
     console.log('Delayed execution!');
-}, 3000);
+}, 1);
 
 function addDataToChart() {
     myChart.zoom({ x: 0.05 });
@@ -70,17 +70,7 @@ function addDataToChart() {
     console.log("Updated chart");
     myChart.update();
 
-    document.getElementById('hours').value = '';
-    document.getElementById('minutes').value = '';
 }
-
-function addDataToChartWithDelay() {
-    setTimeout(addDataToChart, 2000);
-}
-
-
-
-
 
 function changeGraph() {
     if (myChart.config.type === "line") {
