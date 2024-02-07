@@ -12,13 +12,8 @@
 </head>
 
 <body style="background-color:#282626;">
-    <script>
-            var totalhours = {{totalhours}}
-            var date = {{date}}
-    </script>
-
     <p style="text-align: center; margin-top:2rem; color: white; font-family: 'SF Pro Display'; margin-bottom: 1rem">Please input the time you spent studying.</p>
-    <form onsubmit="addDataToChart();" action="#" method="post">
+    <form onsubmit="addDataToChart();" method="post">
         <div class="information-input" style="display: grid; place-items: center;">
             <div class="studied-for-input" style="width: 20%; display: grid; place-items: center; grid-template-columns: auto auto auto auto auto">
                 <p style="color: white;">I studied for </p><input type="number" min="0" max="15" id="hours" required name="hours" style="width: 2rem;">
@@ -27,9 +22,10 @@
             </div>
             <input type="date" name="date" id="date" required>
             <input type="submit" value="Add">
-            <button onclick="changeGraph(); return false;">Change Graph</button>
+            
         </div>
     </form>
+    <button onclick="console.log({{dates}}); console.log({{labels_}});">Change Graph</button>
     <div class="wrapper" style="padding-top:0.3rem;">
         <div class="wrapper" style="width:43rem;height:30rem; background-color: rgba(0,0,0,0.2); border-radius:2rem; padding:1rem"><canvas aria-label="Hello ARIA World" width="15" height="10" id="dataChart"></canvas></div>
     </div>
@@ -38,6 +34,7 @@
     <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js" integrity="sha256-UDxwmAK+KFxnav4Dab9fcgZtCwwjkpGIwxWPNcAyepw=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" integrity="sha512-csNcFYJniKjJxRWRV1R7fvnXrycHP6qDR21mgz1ZP55xY5d+aHLfo9/FcGDQLfn2IfngbAHd8LdfsagcCqgTcQ==" crossorigin = "anonymous" referrerpolicy = "no-referrer"> </script>
     <script src="{{url_for('static',filename="charts.js" )}}"></script>
 
 </body>

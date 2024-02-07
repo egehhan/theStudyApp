@@ -2,14 +2,15 @@ from flask import Flask, render_template, redirect, url_for, request, session, f
 from flask_sqlalchemy import SQLAlchemy
 from datetime import timedelta
 from ast import literal_eval
+import os
 
 login_or_signup_button = "Sign Up"
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.sqlite3'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.secret_key = "estoyloco"
-app.config['SECRET_KEY'] = "estoyloco"
+app.secret_key = os.environ.get("SECRET_KEY")
+app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY")
 app.permanent_session_lifetime = timedelta(days=5)
 
 db = SQLAlchemy(app)
@@ -29,15 +30,13 @@ class users(db.Model):
         self.email = email
         self.password = password
         self.tracking = tracking
-        
+
 @app.route("/")
 @app.route("/home/")
 def home():
     if "user" in session:
-        print("User is logged in")
         login_or_signup_button = "Log Out"
     else:
-        print("User is not logged in")
         login_or_signup_button = "Sign Up"
     return render_template("home.html", content=login_or_signup_button)
 
@@ -49,11 +48,9 @@ def contact_me():
 def tracking():
     global login_or_signup_button
     if "user" not in session:
-        print("User is not logged in redirecting to login page.")
         return redirect(url_for("login"))
     if request.method == 'POST':
-        print("Saving tracking data to database.")
-        ##### SAVE TRACKING DATA TO DATABASE AS A HASHMAP {date: totalhours} #####
+        ##### SAVE TRACKING DATA TO DATABASE AS A HASHMAP {date: totalhours} ##### CURRENTLY NOT SAVING TO DATABASE
         date = str(request.form["date"]) # turn the date into a readable type
         hours = int(request.form["hours"])
         minutes = int(request.form["minutes"])
@@ -64,12 +61,17 @@ def tracking():
         data = str(data) # turn the data into a writable type
         user.tracking = data # enter the data to the database
         db.session.commit() # commit changes
-        print("Saved tracking data to database.")
-        print(f"{data}")
+        tracking_data = dict(literal_eval(user.tracking)) 
+        dates = list(tracking_data.keys())
+        values = list(tracking_data.values())
         
-        return render_template("tracking.html")
-    else:   
-        return render_template("tracking.html")
+        return render_template("tracking.html", dates=dates, values=values)
+    else:
+        user = users.query.filter_by(email=session["user"]).first()
+        tracking_data = dict(literal_eval(user.tracking)) 
+        dates = list(tracking_data.keys())
+        values = list(tracking_data.values())
+        return render_template("tracking.html", dates=dates, values=values)
         
 @app.route("/techniques/", methods=['POST', 'GET'])
 def techniques():
@@ -83,7 +85,6 @@ def pricing():
 def register():
     global login_or_signup_button
     if "user" in session:
-        print("User is already in session redirecting to home.")
         return redirect(url_for("home"))
     else:
         if request.method == "POST":
@@ -94,7 +95,6 @@ def register():
             found_user = users.query.filter_by(name=usrname).first()
             found_email = users.query.filter_by(email=usremail).first()
             if found_user or found_email:
-                print("There is a user with that email/username unfortunutely.")
                 return redirect(url_for("register"))
             else:
                 usr = users(name=usrname, email=usremail, password=usrpassword, tracking="{}")
@@ -102,7 +102,6 @@ def register():
                 db.session.commit()
                 session.permanent = True
                 session["user"] = usremail
-                print("Registered new user ")
                 login_or_signup_button = "Log Out"
                 return redirect(url_for("home"))
         elif request.method == "GET":
@@ -124,14 +123,11 @@ def login():
             if user_exists and true_password:
                 session.permanent = True
                 session["user"] = usremail
-                print(f"Logged in as {usremail, usrpassword}")
                 login_or_signup_button = "Log Out"
                 return redirect(url_for("home"))
             elif user_exists and not true_password:
-                print("Failed to log in because incorrect password")
                 return redirect(url_for("login"))
             elif not user_exists:
-                print("No user found with that email")
                 return redirect(url_for("register"))
             else:
                 return False
