@@ -11,7 +11,11 @@
 
 </head>
 
-<body style="background-color:#282626;">
+<body onload="for (let i=0; i < {{dates}}.length; i++) {
+            
+    data.push({ x : {{dates}}[i], y :{{values}}[i]});
+    myChart.zoom({ x: 0.07});
+    myChart.update();}" style="background-color:#282626;">
     <p style="text-align: center; margin-top:2rem; color: white; font-family: 'SF Pro Display'; margin-bottom: 1rem">Please input the time you spent studying.</p>
     <form onsubmit="addDataToChart();" method="post">
         <div class="information-input" style="display: grid; place-items: center;">
@@ -22,20 +26,20 @@
             </div>
             <input type="date" name="date" id="date" required>
             <input type="submit" value="Add">
-
+            
         </div>
     </form>
-    <div class="wrapper" style="padding-top:0.3rem;">
-        <div class="wrapper" style="width:43rem;height:30rem; background-color: rgba(0,0,0,0.2); border-radius:2rem; padding:1rem"><canvas aria-label="Hello ARIA World" width="15" height="10" id="dataChart"></canvas></div>
-    </div>
+        <div class="wrapper" style="padding-top:0.3rem;"><button onclick='changeGraph();'>Change graph</button>
+            <div class="wrapper" style="width:43rem;height:30rem; background-color: rgba(0,0,0,0.2); border-radius:2rem; padding:1rem">
+                <canvas aria-label="Hello ARIA World" width="15" height="10" id="dataChart"></canvas>
+            </div>
+        </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js" integrity="sha256-UDxwmAK+KFxnav4Dab9fcgZtCwwjkpGIwxWPNcAyepw=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" integrity="sha512-csNcFYJniKjJxRWRV1R7fvnXrycHP6qDR21mgz1ZP55xY5d+aHLfo9/FcGDQLfn2IfngbAHd8LdfsagcCqgTcQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
-    </script>
-    <script src="{{url_for('static',filename=" charts.js " )}}"></script>
+    <script src="{{url_for('static',filename="charts.js")}}"></script>
 
 </body>
 

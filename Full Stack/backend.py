@@ -50,7 +50,7 @@ def tracking():
     if "user" not in session:
         return redirect(url_for("login"))
     if request.method == 'POST':
-        ##### SAVE TRACKING DATA TO DATABASE AS A HASHMAP {date: totalhours} ##### CURRENTLY NOT SAVING TO DATABASE
+        ##### SAVE TRACKING DATA TO DATABASE AS A HASHMAP {date: totalhours} #####
         date = str(request.form["date"]) # turn the date into a readable type
         hours = int(request.form["hours"])
         minutes = int(request.form["minutes"])
@@ -61,16 +61,23 @@ def tracking():
         data = str(data) # turn the data into a writable type
         user.tracking = data # enter the data to the database
         db.session.commit() # commit changes
-        tracking_data = dict(literal_eval(user.tracking)) 
-        dates = list(tracking_data.keys())
-        values = list(tracking_data.values())
+        tracking_data = dict(literal_eval(user.tracking))
+        keys = list(tracking_data.keys())
+        keys.sort()
+        sorted_dict = {i: tracking_data[i] for i in keys}
+        values = list(sorted_dict.values())
+        dates = list(sorted_dict.keys())
+        print(values, dates)
         
         return render_template("tracking.html", dates=dates, values=values)
     else:
         user = users.query.filter_by(email=session["user"]).first()
         tracking_data = dict(literal_eval(user.tracking)) 
-        dates = list(tracking_data.keys())
-        values = list(tracking_data.values())
+        keys = list(tracking_data.keys())
+        keys.sort()
+        sorted_dict = {i: tracking_data[i] for i in keys}
+        values = list(sorted_dict.values())
+        dates = list(sorted_dict.keys())
         return render_template("tracking.html", dates=dates, values=values)
         
 @app.route("/techniques/", methods=['POST', 'GET'])

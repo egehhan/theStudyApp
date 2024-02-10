@@ -8,7 +8,7 @@ var chartOptions = {
         x: {
             type: 'time',
             time: {
-                unit: 'day'
+                unit: 'week'
             }
         },
         y: {
@@ -42,7 +42,6 @@ var chartData = {
         data: data,
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
-        tension: 0.2
     }]
 }
 
@@ -51,26 +50,6 @@ var myChart = new Chart(ctx, {
     data: chartData,
     options: chartOptions
 });
-
-setTimeout(function() {
-    console.log('Delayed execution!');
-}, 1);
-
-function addDataToChart() {
-    myChart.zoom({ x: 0.05 });
-    var hours = document.getElementById('hours').value;
-    var minutes = document.getElementById('minutes').value;
-    var date = document.getElementById('date').value;
-
-    let totalhours;
-    totalhours = ((parseInt(hours) * 60) + parseInt(minutes)) / 60;
-
-    data.push({ x: date, y: totalhours });
-
-    console.log("Updated chart");
-    myChart.update();
-
-}
 
 function changeGraph() {
     if (myChart.config.type === "line") {
